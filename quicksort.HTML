@@ -1,0 +1,75 @@
+<head>     
+  <meta charset="utf-8">
+  <title>
+  </title>  
+  <script>
+                                                                                                                                                                                             
+  function Preparation_for_sorting()
+  {
+    var array_preparation = generate(9);
+    document.getElementById("inputValue").value = array_preparation;
+    var a = 0;
+    var b = (array_preparation.length) -1; 
+    var array = qsortmy(array_preparation, a, b);
+    document.getElementById("inputValue2").value = array;
+  }
+
+  function generate(number)
+  {
+    var array_preparation = [];
+    for (var i = 0;  number - 1 >= i; i++)
+    {
+      array_preparation[i] = Math.floor(Math.random() * (999 - 1 + 1)) + 1; 
+    }
+    return array_preparation;
+  }
+
+ function qsortmy(array, a, b)
+  { 
+    if (b < a)
+    return array;
+    var first = a;
+    var last = b;
+    var support = array [Math.floor((last + first) / 2)];
+    while  (first <= last)
+    {
+      while  (array[first] < support)
+      {
+        first = first + 1;
+      }
+      while  (array[last] > support)
+      {
+        last = last - 1 ;
+      }
+      if  (first <= last)
+      {
+        var c = array[first];
+        array[first] = array[last];
+        array[last] = c;
+        first = first + 1;
+        last = last - 1;  
+      }  
+    }     
+    if (a < last) 
+    {
+      qsortmy(array, a, last);
+    }
+    if (b > first)
+    {
+      qsortmy(array, first, b);
+    }
+    return (array);
+  } 
+  
+  </script>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="inputValue" style="font-size:45px" value="" size=40;>     
+      </div>
+         <div>
+      <input type="text" id="inputValue2" style="font-size:45px" value="" size=40;>     
+      </div>
+    <input type="button" name="sort" value="Выполнить быструю сортировку"onclick="Preparation_for_sorting();"> 
+  </body>
+</html>

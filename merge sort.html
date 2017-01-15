@@ -1,0 +1,109 @@
+<head>     
+  <meta charset="utf-8">
+  <title> сортировка слиянием
+  </title>  
+  <script>
+                                                                                                                                                                                             
+  function Preparation_for_sorting()
+  {
+    var array_preparation = generate(9);
+    document.getElementById("inputValue").value = array_preparation;
+    var array = Preparation_for_merge_sort(array_preparation);
+    document.getElementById("inputValue2").value = array;
+  }
+
+  function generate(number)
+  {
+    var array_preparation = [];
+    for (var i = 0;  number - 1 >= i; i++)
+    {
+      array_preparation[i] = Math.floor(Math.random() * (999 - 1 + 1)) + 1; 
+    }
+    return array_preparation;
+  }
+
+  function Preparation_for_merge_sort(array)
+  {
+      var length_array = array.length - 1;
+      var beginning_array = 0;
+      array_partitioning(array, beginning_array, length_array);
+      return array;
+  }
+
+  function array_partitioning(array,beginning_array,length_array)
+  { 
+    if (beginning_array < length_array)
+      {
+        var array_middle = Math.floor((beginning_array + length_array) / 2);
+        array_partitioning(array, beginning_array, array_middle);
+        array_partitioning(array, array_middle + 1, length_array);
+        sorting(array, beginning_array, array_middle, length_array);
+      }
+   }
+
+  function sorting(sorted_array,first,middle,last)
+  {
+    var array = new Array(last + 1 - first);
+    var subarray_middle = middle + 1;
+    var beginning_subarray = first;
+    var i = 0;
+
+    while (beginning_subarray <= middle)
+    {
+      if (subarray_middle <= last)
+      {  
+        if (sorted_array[beginning_subarray] <= sorted_array[subarray_middle])
+        { 
+          array[i] = sorted_array[beginning_subarray];
+          beginning_subarray++; 
+        }
+        else
+        {
+          array[i] = sorted_array[subarray_middle];
+          subarray_middle++;
+        }
+        i++;
+      }
+      else
+      {
+      return sorted_array = merger(sorted_array, first, middle, last,array, subarray_middle, beginning_subarray, i);
+      }
+    }  
+    return sorted_array = merger(sorted_array, first, middle, last,array, subarray_middle, beginning_subarray, i);
+  }
+
+  function merger(sorted_array, first, middle, last,array, subarray_middle, beginning_subarray, i)
+  {
+    if (beginning_subarray > middle)
+    {
+      for (beginning_subarray = subarray_middle; beginning_subarray <= last; beginning_subarray++)
+      {
+        array[i] = sorted_array[beginning_subarray];
+        i++;
+      }
+    }
+    else
+    {
+      for (beginning_subarray = beginning_subarray; beginning_subarray <= middle; beginning_subarray++)
+      { 
+        array[i] = sorted_array[beginning_subarray]; i++;
+      } 
+    }    
+    for (beginning_subarray = 0; beginning_subarray <= last - first; beginning_subarray++)
+    {
+      sorted_array [beginning_subarray + first] = array[beginning_subarray];
+    }
+  }
+
+  </script>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="inputValue" style="font-size:45px" value="" size=40;>     
+      </div>
+         <div>
+      <input type="text" id="inputValue2" style="font-size:45px" value="" size=40;>     
+      </div>
+    <input type="button" name="sort" value="Выполнить сортировку слиянием"onclick="Preparation_for_sorting();"> 
+  </body>
+</html>

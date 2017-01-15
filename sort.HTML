@@ -1,0 +1,250 @@
+<head>     
+  <meta charset="utf-8">
+  <title>
+  </title>  
+  <script>
+
+  function sort()
+  {
+    var array_preparation_s = generate(10000);
+    var array_preparation_q = array_preparation_s.slice();
+    var array_preparation_b = array_preparation_s.slice();
+    print_result("pole_qsort_my_1", array_preparation_q, qsort_my);
+    print_result("pole_qsort_1", array_preparation_s, sort_standart);
+    print_result("pole_bsort_my_1", array_preparation_b, bubblesort);
+
+    var array_preparation_s = generate(30000);
+    var array_preparation_q = array_preparation_s.slice();
+    var array_preparation_b = array_preparation_s.slice();
+    print_result("pole_qsort_my_2", array_preparation_q, qsort_my);
+    print_result("pole_qsort_2", array_preparation_s, sort_standart);
+    print_result("pole_bsort_my_2", array_preparation_b, bubblesort);
+
+    var array_preparation_s = generate(100000);
+    var array_preparation_q = array_preparation_s.slice();
+    var array_preparation_b = array_preparation_s.slice();
+    print_result("pole_qsort_my_3", array_preparation_q, qsort_my);
+    print_result("pole_qsort_3", array_preparation_s, sort_standart);
+    print_result("pole_bsort_my_3", array_preparation_b, bubblesort);
+
+    var array_preparation_s = generate(1000000);
+    var array_preparation_q = array_preparation_s.slice();
+    var array_preparation_b = array_preparation_s.slice();
+    print_result("pole_qsort_my_4", array_preparation_q, qsort_my);
+    print_result("pole_qsort_4", array_preparation_s, sort_standart);
+
+    var array_preparation_s = [7,8,6,10,4,2,2,8,1,5];
+    var array_preparation_q = [7,8,6,10,4,2,2,8,1,5];
+    var array_preparation_b = [7,8,6,10,4,2,2,8,1,5];
+    document.getElementById("pole_1").value = array_preparation_s;
+    document.getElementById("pole_2").value = qsort_my(array_preparation_q); 
+    document.getElementById("pole_3").value = sort_standart(array_preparation_s);  
+    document.getElementById("pole_4").value = bubblesort(array_preparation_b); 
+    }
+
+  function generate(number)
+  {
+     var array_preparation =[];
+    for( var i = 0;  number - 1 >= i; i++)
+    {
+      array_preparation[i] = Math.floor(Math.random() * (999 - 1 + 1)) + 1; 
+    }
+    return array_preparation;
+  }
+
+  function print_result(id, array, sort_function)
+  {
+    var elapsed =measureTime(array, sort_function);
+    document.getElementById(id).value = elapsed + " мс"; 
+  }
+
+  function measureTime(array, sort_function)
+  {
+    var start = new Date().getTime();
+    sort_function(array);
+    var elapsed = new Date().getTime() - start;
+    return elapsed;
+  }
+
+  function bubblesort(array)
+  { 
+    var length_of_the_array = array.length;
+    for (var a = 0; a < length_of_the_array - 1; a++)
+    {
+      for (var b = 0; b < length_of_the_array - 1 - a; b++)
+      { 
+        if (array[b + 1] < array[b])
+        { 
+          var temporal = array[b + 1];
+          array[b + 1] = array[b];
+          array[b] = temporal;
+        }
+      }
+    }                     
+    return array; 
+  }
+  
+  function qsort_my(array)
+  {
+    var a = 0;
+    var b = (array.length) - 1; 
+    qsortmy(array, a, b);
+    return array; 
+  }
+
+  function qsortmy(array, a, b)
+  { 
+    if (b < a)
+    return array;
+    var first = a;
+    var last = b;
+    var support = array [Math.floor((last + first) / 2)];
+    while  (first <= last)
+    {
+      while  (array[first] < support)
+      {
+        first = first + 1;
+      }
+      while  (array[last] > support)
+      {
+        last = last - 1 ;
+      }
+      if  (first <= last)
+      {
+        var c = array[first];
+        array[first] = array[last];
+        array[last] = c;
+        first = first + 1;
+        last = last - 1;  
+      }  
+    }     
+    if (a < last) 
+    {
+      qsortmy(array, a, last);
+    }
+    if (b > first)
+    {
+      qsortmy(array, first, b);
+    }
+    return (array);
+  } 
+
+  function sort_standart (array)
+  {
+    var output_func = array.sort(function(a, b){return a - b;});
+    return output_func; 
+  }
+  </script>
+  </head>
+  <body>
+  <form name="test">
+    <table border="2" size="21" cellspacing="0" align="center"
+    style="font-size:25px">
+      <tr>
+        <td>
+        </td>
+        <td>____ten_thousand____
+        </td>     
+        <td>___thirty_thousand___
+        </td>
+        <td>one_hundred_thousand
+        </td>
+        <td>____million_array____
+        </td>
+              
+      <tr>
+        <td>сортировка пузырьком
+        </td>
+        <td>
+          <input type="text" id="pole_bsort_my_1" style="font-size:50px" value="0" size=5;>
+        </td>     
+        <td>
+          <input type="text" id="pole_bsort_my_2" style="font-size:50px" value="0" size=5;>
+        </td>
+        <td>
+          <input type="text" id="pole_bsort_my_3" style="font-size:50px" value="0" size=5;>
+        </td>
+        <td>
+          <input type="text" id="pole_bsort_my_4" style="font-size:50px" value="-----" size=5;>
+        </td>
+      </tr>  
+      <tr>
+        <td>Моя быстрая сортировка
+        </td>
+        <td>
+          <input type="text" id="pole_qsort_my_1" style="font-size:50px" value="0" size=5;>
+        </td>      
+        <td>
+          <input type="text" id="pole_qsort_my_2" style="font-size:50px" value="0" size=5;>
+        </td>     
+        <td>
+          <input type="text" id="pole_qsort_my_3" style="font-size:50px" value="0" size=5;>
+        </td>  
+        <td>
+          <input type="text" id="pole_qsort_my_4" style="font-size:50px" value="0" size=5;>
+        </td>     
+      </tr>  
+      <tr>
+        <td>Встроенная быстрая сортировка
+        </td>
+        <td>
+          <input type="text" id="pole_qsort_1" style="font-size:50px" value="0" size=5;>
+        </td>          
+        <td>
+          <input type="text" id="pole_qsort_2" style="font-size:50px" value="0" size=5;>
+        </td>     
+        <td>
+          <input type="text" id="pole_qsort_3" style="font-size:50px" value="0" size=5>
+        </td>    
+        <td>
+          <input type="text" id="pole_qsort_4" style="font-size:50px" value="0" size=5;>
+        </td>          
+      </tr> 
+      <tr>
+        <td>
+          <input type="button" name="bubble sort" style="font-size:35px" value="    отсортировать      "onclick="sort();"> 
+        </td>
+        <td>
+        </td>          
+        <td>
+        </td>     
+        <td>
+        </td>    
+        <td>
+        </td>  
+      </tr> 
+    </table>   
+
+    <table border="2" size="21" cellspacing="0" align="center"
+    style="font-size:25px">
+      <tr>
+        <td>входной массив
+        </td>     
+        <td>
+          <input type="text" id="pole_1" style="font-size:32px" value="0" size=40;>
+        </td>
+      </tr> 
+      <tr>
+        <td>после быстрой
+        </td>     
+        <td>
+          <input type="text" id="pole_2" style="font-size:32px" value="0" size=40;>
+        </td>
+        </tr>  
+      <tr>
+        <td>после встроенной 
+        </td>     
+        <td>
+          <input type="text" id="pole_3" style="font-size:32px" value="0" size=40;>
+        </td>
+      </tr>  
+      <tr>
+        <td>после пузырьковой 
+        </td>     
+        <td>
+          <input type="text" id="pole_4" style="font-size:32px" value="0" size=40;>
+        </td>
+        </tr>      
+    </table>  
+  </body>
+</html>
